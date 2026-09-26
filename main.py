@@ -1,3 +1,4 @@
+import sys
 from uvicorn import Server, Config
 from apis import app
 from asyncio import run
@@ -8,4 +9,7 @@ async def main():
     await server.serve()
 
 if __name__ == "__main__":
-    run(main())
+    try:
+        run(main())
+    except KeyboardInterrupt:
+        sys.exit(0)
