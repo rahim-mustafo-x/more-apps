@@ -4,4 +4,9 @@ services:
       context: .
     ports:
       - "6767:6767"
+    volumes:
+      - sqlite_data:/app/db
     restart: unless-stopped
+
+volumes:
+  sqlite_data:

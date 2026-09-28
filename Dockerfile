@@ -30,7 +30,7 @@ COPY . .
 RUN uv sync --frozen
 
 # Make sure appuser owns everything it needs to read/write
-RUN chown -R appuser:appuser /app
+RUN mkdir -p /app/db && chown -R appuser:appuser /app
 
 USER appuser
 
