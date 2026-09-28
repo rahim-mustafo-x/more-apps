@@ -35,6 +35,7 @@ class Database:
                        (name, icon_url, direct_url, description))
         conn.commit()
         conn.close()
+        return {'status': 'done'}
     def update_app(self, item_id: int, name: str, icon_url: str, direct_url: str, description: str):
         conn = connect(self.db_path)
         cursor = conn.cursor()
@@ -44,6 +45,7 @@ class Database:
                        (name, icon_url, direct_url, description, item_id))
         conn.commit()
         conn.close()
+        return {'status':'done'}
     def delete_app(self, item_id: int):
         conn = connect(self.db_path)
         cursor = conn.cursor()
@@ -51,10 +53,17 @@ class Database:
         delete from {self.__table_name} where {self.__item_id} = ?''',(item_id,))
         conn.commit()
         conn.close()
+        return {'status':'done'}
     def get_apps(self) -> Generator[AppItemResponse, None, None]:
         conn = connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute(f'''select * from {self.__table_name}''')
         for row in cursor:
-            yield AppItemResponse(*row)
+            yield AppItemResponse(
+                itemId=row[0],
+                name=row[1],
+                iconUrl=row[2],
+                directUrl=row[3],
+                description=row[4]
+            )
         conn.close()
