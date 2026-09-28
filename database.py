@@ -17,6 +17,7 @@ class Database:
     def create_table(self):
         conn = connect(self.db_path)
         cursor = conn.cursor()
+
         cursor.execute(f'''
         create table if not exists {self.__table_name}(
         {self.__item_id} integer primary key autoincrement,
